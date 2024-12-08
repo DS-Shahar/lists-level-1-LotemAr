@@ -1,0 +1,102 @@
+public class LinkedListUtils {
+
+    // 1. יצירת רשימה משורשרת ממערך
+    public static Node<Integer> buildList(int[] a) {
+        Node<Integer> l = new Node<>(a[0]);
+        Node<Integer> p = l;
+        for (int i = 1; i < a.length; i++) {
+            Node<Integer> x = new Node<>(a[i]);
+            p.setNext(x);
+            p = p.getNext();
+        }
+        return l;
+    }
+
+    // 2. הדפסת רשימה בשורות נפרדות
+    public static void printList(Node<Integer> list) {
+        Node<Integer> p = list;
+        while (p != null) {
+            int x = p.getValue();
+            System.out.println(x);
+            p = p.getNext();
+        }
+    }
+
+    // הדפסת רשימה מהסוף להתחלה בעזרת רקורסיה
+    public static void printListReverse(Node<Integer> node) {
+        if (node == null) {
+            return;
+        }
+        printListReverse(node.getNext());
+        System.out.println(node.getValue());
+    }
+
+    // 3. בניית רשימה ממספרים חיוביים עד 1-
+    public static Node<Integer> buildListFromInput() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter positive numbers (enter -1 to stop):");
+        Node<Integer> head = null, p = null;
+
+        while (true) {
+            int num = scanner.nextInt();
+            if (num == -1) {
+                break;
+            }
+            Node<Integer> newNode = new Node<>(num);
+            if (head == null) {
+                head = newNode;
+                p = head;
+            } else {
+                p.setNext(newNode);
+                p = p.getNext();
+            }
+        }
+        return head;
+    }
+
+    // 4. הדפסת מספרים זוגיים בלבד
+    public static void printEvenValues(Node<Integer> list) {
+        Node<Integer> p = list;
+        while (p != null) {
+            int x = p.getValue();
+            if (x % 2 == 0) {
+                System.out.println(x);
+            }
+            p = p.getNext();
+        }
+    }
+
+    // 5. בדיקה אם מספר מופיע ברשימה
+    public static boolean containsValue(Node<Integer> list, int value) {
+        Node<Integer> p = list;
+        while (p != null) {
+            if (p.getValue() == value) {
+                return true;
+            }
+            p = p.getNext();
+        }
+        return false;
+    }
+
+    // Main לדוגמה
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3, 4, 5};
+        Node<Integer> list = buildList(arr);
+
+        System.out.println("Original list:");
+        printList(list);
+
+        System.out.println("Reversed list:");
+        printListReverse(list);
+
+        System.out.println("Even values:");
+        printEvenValues(list);
+
+        System.out.println("Contains value 3? " + containsValue(list, 3));
+        System.out.println("Contains value 6? " + containsValue(list, 6));
+
+        System.out.println("Build list from input:");
+        Node<Integer> inputList = buildListFromInput();
+        printList(inputList);
+    }
+}
